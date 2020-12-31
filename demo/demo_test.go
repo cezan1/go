@@ -1,0 +1,55 @@
+package main
+
+import (
+	"fmt"
+	"reflect"
+	"testing"
+)
+
+// func TestAvg(t *testing.T) {
+// 	arr := [10]float32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+// 	sum := sum(arr)
+// 	avg := sum / float32(len(arr))
+// 	fmt.Printf("sum=%v 平均值=%.3v \n", sum, avg)
+// }
+type stu struct {
+	name string
+	age  int
+}
+
+func TestRef(t *testing.T) {
+	// var i string = "10"
+	// fmt.Println(i)
+	i := stu{
+		name: "xiaozhen",
+		age:  10,
+	}
+
+	ref(i)
+}
+
+// 不明确传递类型
+func ref(i interface{}) {
+	// 如何知道i类型是什么
+	// i.(type)
+	rt := reflect.TypeOf(i)
+	rv := reflect.ValueOf(i)
+	// fmt.Println("i 的数据类型", rt) // 反射一个数据 的数据类型
+	// fmt.Println("i 的数据指", rv)
+	fmt.Println(rt.NumField())
+	fmt.Printf("i 的数据类型=%v i 的数据指=%v \n", rt, rv)
+
+	for i := 0; i < rt.NumField(); i++ {
+		fmt.Println("i 元素中字段", rt.Field(i).Name)
+	}
+
+	// fmt.Printf("type rt: %T\n", rt)
+	// fmt.Printf("type rv: %T\n", rv)
+	//
+	// rvi := rv.Interface()
+	// // rtv := reflect.ValueOf(rt)
+	// rtv := rt.Name()
+	// fmt.Printf("type rtv: %s\n", rtv)
+	// // reflect.TypeOf(i) ==>> reflect.ValueOf(i) ==>> Interface()
+	// fmt.Printf("type rvi: %T\n", rvi)
+}
